@@ -45,6 +45,7 @@ def downImg(url, name):
     fr = urllib.urlopen(url)
     stream = fr.read(-1)
     fr.close()
+    print "save:"+url+"\r"
     fw = open('picture/' + name, 'w')
     fw.write(stream)
     fw.close()
