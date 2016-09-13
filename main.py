@@ -23,8 +23,8 @@ def post(url, data, cj):
     response = opener.open(req, data)
     # DEBUG AREA
     if debug >= 1:
-        print 'POST_REQUEST:\n' + url
-        print 'POST_CONTENT:\n' + data
+        print ('POST_REQUEST:\n' + url)
+        print ('POST_CONTENT:\n' + data)
     return response.read()
 
 
@@ -34,8 +34,8 @@ def browse(url, cj):
         opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj))
         response = opener.open(req)
         if debug > 4:
-            print 'BROSWE_REQUEST:\n' + url
-            print 'BROSWE_RESPONSE:\n' + response.read()
+            print ('BROSWE_REQUEST:\n' + url)
+            print ('BROSWE_RESPONSE:\n' + response.read())
         return response.read()
     except:
         return ''
@@ -45,7 +45,7 @@ def downImg(url, name):
     fr = urllib.urlopen(url)
     stream = fr.read(-1)
     fr.close()
-    print "save:"+url+"\r"
+    print ("save:"+url+"\r")
     fw = open('picture/' + name, 'w')
     fw.write(stream)
     fw.close()
@@ -62,13 +62,13 @@ def main(user_name, user_password):
     data = {'form_email': user_name,
             'form_password': user_password, 'action': '/'}
     # set group all_pages
-    all_pages = 10
+    all_pages = 20
 
     # login
     try:
         post(du, data, cj)
     except:
-        print 'FATAL'
+        print ('FATAL')
         exit(0)
     times = 0
 
@@ -76,15 +76,15 @@ def main(user_name, user_password):
         # Get Groups
         group_content = browse(
             du + '/group/' + group_id + '/topics?start=' + str(page * 25), cj)
-        print page
+        print (page)
         replace_dict = {'\n': '', '\t': '', ' ': '', '　': ''}
         group_content = replace_all(group_content, replace_dict)
         if debug >= 1:
-            print group_content
+            print (group_content)
         if times == 0:
             group_title = re.findall(
                 '<h1class="group-name">(.*)<\/h1>', group_content)[0]
-            print '\n-----download "' + group_title + '"ing-----'
+            print ('\n-----download "' + group_title + '"ing-----')
             times += 1
         items = re.findall(
             '<ahref="\/group\/topic\/(\d+)\/"title="(.*?)"><.*?<divclass="info">(\d+)回应', group_content)
@@ -95,7 +95,7 @@ def main(user_name, user_password):
                 item_ID = i[0]
                 item_comm = i[2]
                 if int(item_comm) > 1:
-                    print item_title + ' | ' + item_comm
+                    print (item_title + ' | ' + item_comm)
                     item_url = du + '/group/topic/' + item_ID + '/'
                     item_content = browse(item_url, cj)
                     img_content = replace_all(item_content, replace_dict)
