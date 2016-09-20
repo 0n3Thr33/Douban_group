@@ -121,6 +121,6 @@ def main(user_name, user_password):
 if __name__ == '__main__':
     cj = cookielib.CookieJar()
     debug = 0
-    user_name = raw_input('豆瓣 用户名\n')
-    user_password = raw_input('\n豆瓣 密码\n')
-    main(user_name, user_password)
+    # user_name = raw_input('豆瓣 用户名\n')
+    # user_password = raw_input('\n豆瓣 密码\n')
+    main('user_name', 'user_password')
